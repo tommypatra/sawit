@@ -242,6 +242,7 @@ $(document).ready(function() {
         let selectedRows = [];
         $('.cek-baris:checked').each(function() {
             let row = $(this).closest('tr');
+
             let data = {
                 pelanggan_id: $(this).data('pelanggan_id'),
                 timbang_tiket_id: $(this).val(),
@@ -261,11 +262,14 @@ $(document).ready(function() {
 
     function showNotaModal(data) {
         let notaList = $('#notaList');
+        let nama;
         notaList.empty();
         $('#total-keseluruhan-angka').text('Rp. 0');
         $('#total-keseluruhan-terbilang').text('rupiah');
 
         $.each(data, function(index, item) {
+            if (index==0)
+                nama=item.pelanggan_user_name;
             let rowHtml = `
                 <div class="row daftar-nota" data-timbang_tiket_id="${item.timbang_tiket_id}" data-pelanggan_id="${item.pelanggan_id}">
                     <div class="col-md-1">
@@ -295,6 +299,7 @@ $(document).ready(function() {
         // Tampilkan modal
         $('#form-modal-nota').trigger('reset');
         $('#form-modal-nota input[type="hidden"]').val('');
+        $('#nama').val(nama);
         showModal('modal-form-nota');
     }    
 
@@ -305,11 +310,15 @@ $(document).ready(function() {
         let hargaSatuan = parseInt($(this).val());
         let totalBayar = jumlahSatuan * hargaSatuan; 
 
-        daftar.find('.total_bayar').text(formatRupiah(totalBayar));
+        daftar.find('.total_bayar').text(ribuanId(totalBayar));
 
         // totalBayar.text(jumlahSatuan * hargaSatuan);
 
         updateTotalKeseluruhan();
+    });
+
+    $('.cek-semua').on('click', function() {
+        $('.cek-baris').prop('checked', $(this).prop('checked'));
     });
 
     // Function to update total keseluruhan
@@ -318,9 +327,9 @@ $(document).ready(function() {
         $('.total_bayar').each(function() {
             let angkabayar=$(this).text().replace(/\./g, '');
             totalKeseluruhan += parseInt(angkabayar);
-            // console.log(angkabayar);
+            console.log(angkabayar);
         });
-        $('#total-keseluruhan-angka').text('Rp. '+formatRupiah(totalKeseluruhan));
+        $('#total-keseluruhan-angka').text('Rp. '+ribuanId(totalKeseluruhan));
         $('#total-keseluruhan-terbilang').text(terbilang(totalKeseluruhan)+' rupiah');
     }    
 

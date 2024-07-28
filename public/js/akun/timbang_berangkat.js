@@ -260,7 +260,7 @@ $(document).ready(function() {
     function rincianPabik(dt) {
         let detail=dt.berangkat_pabrik;
         let bayarPabrik='';
-        if(detail.id){
+        if(detail!==null){
             bayarPabrik = `
                 <div class="accordion" id="accordionPanels${detail.id}">
                     <div class="accordion-item">
