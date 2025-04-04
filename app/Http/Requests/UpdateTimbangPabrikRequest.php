@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BerangkatPabrikRequest extends FormRequest
+class UpdateTimbangPabrikRequest extends FormRequest
 {
     public function authorize()
     {
@@ -25,14 +25,11 @@ class BerangkatPabrikRequest extends FormRequest
             'pabrik_timbang_kotor' => 'required|numeric',
             'pabrik_timbang_bersih' => 'required|numeric',
             'tp' => 'required',
-            'ram_berat_kotor_awal' => 'required',
             'harga_sawit' => 'required|numeric',
             'muatan' => 'required|array',
             'muatan.*.berangkat_timbang_id' => 'required|numeric',
             'muatan.*.persen' => 'required',
-            'muatan.*.harga' => 'required',
             'muatan.*.pabrik_timbang_kotor' => 'required|numeric',
-            'muatan.*.pabrik_timbang_bersih' => 'required|numeric',
         ];
         return $rules;
     }
@@ -44,15 +41,12 @@ class BerangkatPabrikRequest extends FormRequest
             'tanggal_timbang' => 'tanggal timbng',
             'pabrik_timbang_kotor' => 'berat kotor timbang pabrik',
             'pabrik_timbang_bersih' => 'berat kotor timbang bersih',
-            'ram_berat_kotor_awal' => 'ram berat kotor',
             'tp' => 'persen perhitungan',
             'harga_sawit' => 'harga sawit',
             'muatan' => 'muatan',
             'muatan.*.berangkat_timbang_id' => 'muatan berangkat',
             'muatan.*.persen' => 'persen muatan',
-            'muatan.*.harga' => 'harga',
             'muatan.*.pabrik_timbang_kotor' => 'berat kotor bimbang pabrik',
-            'muatan.*.pabrik_timbang_bersih' => 'berat bersih bimbang pabrik',
         ];
     }
 }

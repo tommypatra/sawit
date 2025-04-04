@@ -15,16 +15,22 @@ class CreateBerangkatTimbangsTable extends Migration
     {
         Schema::create('berangkat_timbangs', function (Blueprint $table) {
             $table->id();
-            $table->string('nomor_nota');
-            $table->integer('timbang_kotor');
-            $table->integer('timbang_bersih');
-            $table->date('tanggal');
-            $table->foreignId('pabrik_id');
-            $table->foreign('pabrik_id')->references('id')->on('pabriks')->restrictOnDelete();
+            $table->integer('ram_timbang_kotor');
+            $table->integer('ram_timbang_bersih');
+            $table->integer('pabrik_timbang_kotor')->nullable();
+            $table->integer('pabrik_timbang_bersih')->nullable();
+            $table->integer('harga')->nullable();
+            $table->integer('nilai_susut')->nullable();
+            $table->decimal('persen', 10, 2)->nullable();
+            $table->foreignId('ram_id');
+            $table->foreign('ram_id')->references('id')->on('rams')->restrictOnDelete();
+            // $table->foreignId('pabrik_id');
+            // $table->foreign('pabrik_id')->references('id')->on('pabriks')->restrictOnDelete();
+            $table->foreignId('berangkat_mobil_id');
+            $table->foreign('berangkat_mobil_id')->references('id')->on('berangkat_mobils')->restrictOnDelete();
             $table->foreignId('operator_id');
             $table->foreign('operator_id')->references('id')->on('operators')->restrictOnDelete();
             $table->timestamps();
-            $table->unique(['nomor_nota']);
         });
     }
 

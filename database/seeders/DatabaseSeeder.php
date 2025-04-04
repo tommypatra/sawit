@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ram;
 use App\Models\Grup;
 use App\Models\User;
 use App\Models\Admin;
@@ -10,8 +11,8 @@ use App\Models\Supir;
 use App\Models\Pabrik;
 use App\Models\Operator;
 use App\Models\Pelanggan;
-use App\Models\SumberBayar;
 use App\Models\UserPabrik;
+use App\Models\SumberBayar;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -29,8 +30,8 @@ class DatabaseSeeder extends Seeder
             ['nama' => 'Admin'],
             ['nama' => 'Operator'],
             ['nama' => 'Pelanggan'],
+            ['nama' => 'Supir'],
             ['nama' => 'Pabrik'],
-            ['nama' => 'Sopir'],
         ];
         //input grp
         foreach ($dtdef as $dt) {
@@ -73,9 +74,9 @@ class DatabaseSeeder extends Seeder
 
 
         $dtdef = [
-            ['nama' => 'PT. Sawit Maju',  'alamat' => 'Konsel', 'hp' => '08520000033'],
-            ['nama' => 'PT. Murni Sawit',  'alamat' => 'Bandara', 'hp' => '08520000034'],
-            ['nama' => 'PT. Sawit Sejahtera',  'alamat' => 'Bandara', 'hp' => '08520000035'],
+            ['nama' => 'PT. Sawit Maju',  'alamat' => 'Konsel', 'hp' => '08520000033', 'biaya_bongkar' => 20, 'biaya_supir' => 200000, 'biaya_mobil' => 150000],
+            ['nama' => 'PT. Murni Sawit',  'alamat' => 'Bandara', 'hp' => '08520000034', 'biaya_bongkar' => 15, 'biaya_supir' => 175000, 'biaya_mobil' => 125000],
+            ['nama' => 'PT. Sawit Sejahtera',  'alamat' => 'Bandara', 'hp' => '08520000035', 'biaya_bongkar' => 10, 'biaya_supir' => 150000, 'biaya_mobil' => 100000],
         ];
 
         //input pabrik
@@ -84,6 +85,9 @@ class DatabaseSeeder extends Seeder
                 'nama' => $dt['nama'],
                 'alamat' => $dt['alamat'],
                 'hp' => $dt['alamat'],
+                'biaya_bongkar' => $dt['biaya_bongkar'],
+                'biaya_supir' => $dt['biaya_supir'],
+                'biaya_mobil' => $dt['biaya_mobil'],
             ]);
         }
 
@@ -106,12 +110,28 @@ class DatabaseSeeder extends Seeder
         }
 
         $dtdef = [
+            ['nama' => 'RAM MOWILA', 'alamat' => 'Mowila'],
+            ['nama' => 'RAM RANOMEETO', 'alamat' => 'Ranomeeto'],
+            ['nama' => 'RAM KONDA', 'alamat' => 'Konda'],
+        ];
+
+        //input ram
+        foreach ($dtdef as $dt) {
+            Ram::create([
+                'nama' => $dt['nama'],
+                'alamat' => $dt['alamat'],
+                'is_aktif' => 1,
+            ]);
+        }
+
+
+        $dtdef = [
             ['nama' => 'RAM'],
             ['nama' => 'BANK BRI'],
             ['nama' => 'RUMAH'],
         ];
 
-        //input mobil
+        //input sumber bayar
         foreach ($dtdef as $dt) {
             SumberBayar::create([
                 'nama' => $dt['nama'],
@@ -148,16 +168,16 @@ class DatabaseSeeder extends Seeder
             ]);
 
         //akun pabrik
-        UserPabrik::create(['pabrik_id' => 1, 'user_id' => 1, 'grup_id' => 4, 'is_aktif' => 1]);
-        UserPabrik::create(['pabrik_id' => 1, 'user_id' => 11, 'grup_id' => 4, 'is_aktif' => 1]);
-        UserPabrik::create(['pabrik_id' => 2, 'user_id' => 12, 'grup_id' => 4, 'is_aktif' => 1]);
-        UserPabrik::create(['pabrik_id' => 3, 'user_id' => 13, 'grup_id' => 4, 'is_aktif' => 1]);
+        UserPabrik::create(['user_id' => 1, 'grup_id' => 5, 'is_aktif' => 1]);
+        UserPabrik::create(['user_id' => 11, 'grup_id' => 5, 'is_aktif' => 1]);
+        UserPabrik::create(['user_id' => 12, 'grup_id' => 5, 'is_aktif' => 1]);
+        UserPabrik::create(['user_id' => 13, 'grup_id' => 5, 'is_aktif' => 1]);
 
         //akun sopir
         for ($i = 7; $i <= 10; $i++)
             Supir::create([
                 'user_id' => $i,
-                'grup_id' => 5,
+                'grup_id' => 4,
                 'is_aktif' => 1,
             ]);
     }

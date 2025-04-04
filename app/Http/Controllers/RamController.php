@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GrupRequest;
-use App\Http\Resources\GrupResource;
-use App\Models\Grup;
+use App\Http\Requests\RamRequest;
+use App\Http\Resources\RamResource;
+use App\Models\Ram;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class GrupController extends Controller
+class RamController extends Controller
 {
     public function index(Request $request)
     {
-        $dataQuery = Grup::orderBy('nama', 'asc');
+        $dataQuery = Ram::orderBy('nama', 'asc');
 
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -23,51 +23,51 @@ class GrupController extends Controller
         if ($limit) {
             $data = $dataQuery->paginate($limit);
             $resourceCollection = $data->map(function ($item) {
-                return new GrupResource($item);
+                return new RamResource($item);
             });
             $data->setCollection($resourceCollection);
         } else {
-            $data = ['data' => GrupResource::collection($dataQuery->get())];
+            $data = ['data' => RamResource::collection($dataQuery->get())];
         }
         return response()->json($data);
     }
 
-    public function store(GrupRequest $request)
+    public function store(RamRequest $request)
     {
         try {
             DB::beginTransaction();
-            $Grup = Grup::create($request->all());
+            $Ram = Ram::create($request->all());
             DB::commit();
-            return response()->json(['message' => 'data baru berhasil dibuat', 'data' => $Grup], 201);
+            return response()->json(['message' => 'data baru berhasil dibuat', 'data' => $Ram], 201);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['message' => 'terjadi kesalahan saat membuat data baru: ' . $e->getMessage()], 500);
         }
     }
 
-    public function show(Grup $Grup)
+    public function show(Ram $Ram)
     {
-        return response()->json(['data' => $Grup], 200);
+        return response()->json(['data' => $Ram], 200);
     }
 
-    public function update(GrupRequest $request, Grup $Grup)
+    public function update(RamRequest $request, Ram $Ram)
     {
         try {
             DB::beginTransaction();
-            $Grup->update($request->all());
+            $Ram->update($request->all());
             DB::commit();
-            return response()->json(['message' => 'berhasil diperbarui', 'data' => $Grup], 200);
+            return response()->json(['message' => 'berhasil diperbarui', 'data' => $Ram], 200);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['message' => 'terjadi kesalahan saat memperbarui : ' . $e->getMessage()], 500);
         }
     }
 
-    public function destroy(Grup $Grup)
+    public function destroy(Ram $Ram)
     {
         try {
             DB::beginTransaction();
-            $Grup->delete();
+            $Ram->delete();
             DB::commit();
             return response()->json(null, 204);
         } catch (\Exception $e) {

@@ -1,10 +1,10 @@
 <?php
 
-use App\Models\BerangkatTimbang;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\TimbangNota;
 use Illuminate\Support\Str;
+use App\Models\BerangkatMobil;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 // use Illuminate\Support\Facades\File as FileFacade;
@@ -18,7 +18,7 @@ if (!function_exists('generateNomorNota')) {
             $lastNota = TimbangNota::where('nomor_nota', 'like', "$format%")->orderBy('nomor_nota', 'desc')->first();
         } elseif ($jenis == 'berangkat') {
             $format = "$tahun-02-";
-            $lastNota = BerangkatTimbang::where('nomor_nota', 'like', "$format%")->orderBy('nomor_nota', 'desc')->first();
+            $lastNota = BerangkatMobil::where('nomor_nota', 'like', "$format%")->orderBy('nomor_nota', 'desc')->first();
         }
 
         if ($lastNota) {
@@ -58,28 +58,28 @@ if (!function_exists('daftarAkses')) {
         if ($getUser) {
             // dd($getUser);
             // echo count($getUser->admin);
-            if (count($getUser->admin) > 0) {
-                $akses = $getUser->admin[0];
+            if ($getUser->admin) {
+                $akses = $getUser->admin;
                 $listAkses[] = ['grup_id' => $akses->grup->id, 'nama' => $akses->grup->nama, 'id' => $akses->id];
                 $akses_id['admin'] = $akses->id;
             }
-            if (count($getUser->operator) > 0) {
-                $akses = $getUser->operator[0];
+            if ($getUser->operator) {
+                $akses = $getUser->operator;
                 $listAkses[] = ['grup_id' => $akses->grup->id, 'nama' => $akses->grup->nama, 'id' => $akses->id];
                 $akses_id['operator'] = $akses->id;
             }
-            if (count($getUser->pelanggan) > 0) {
-                $akses = $getUser->pelanggan[0];
+            if ($getUser->pelanggan) {
+                $akses = $getUser->pelanggan;
                 $listAkses[] = ['grup_id' => $akses->grup->id, 'nama' => $akses->grup->nama, 'id' => $akses->id];
                 $akses_id['pelanggan'] = $akses->id;
             }
-            if (count($getUser->supir) > 0) {
-                $akses = $getUser->supir[0];
+            if ($getUser->supir) {
+                $akses = $getUser->supir;
                 $listAkses[] = ['grup_id' => $akses->grup->id, 'nama' => $akses->grup->nama, 'id' => $akses->id];
                 $akses_id['supir'] = $akses->id;
             }
-            if (count($getUser->userPabrik) > 0) {
-                $akses = $getUser->userPabrik[0];
+            if ($getUser->userPabrik) {
+                $akses = $getUser->userPabrik;
                 $listAkses[] = ['grup_id' => $akses->grup->id, 'nama' => $akses->grup->nama, 'id' => $akses->id];
                 $akses_id['user_pabrik'] = $akses->id;
             }
@@ -119,8 +119,36 @@ if (!function_exists('generateSlug')) {
     function generateSlug($judul, $waktu)
     {
         $disallowed_chars = array(
-            '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '+', '=', '{', '}', '[', ']', '|', '\\', ';', ':', '"', '<', '>', ',', '.', '/', '?',
-            ' ', "'", ' '
+            '!',
+            '@',
+            '#',
+            '$',
+            '%',
+            '^',
+            '&',
+            '*',
+            '(',
+            ')',
+            '+',
+            '=',
+            '{',
+            '}',
+            '[',
+            ']',
+            '|',
+            '\\',
+            ';',
+            ':',
+            '"',
+            '<',
+            '>',
+            ',',
+            '.',
+            '/',
+            '?',
+            ' ',
+            "'",
+            ' '
         );
         $judul = str_replace(' ', '-', $judul);
         $judul = str_replace($disallowed_chars, ' ', $judul);

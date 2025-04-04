@@ -98,6 +98,7 @@
                                                     <tr class="text-start text-gray-400 fw-boldest fs-7 text-uppercase">
                                                         <th class="min-w-20px"><input class="form-check-input cek-semua" type="checkbox" id="cek-semua"></th>
                                                         <th class="min-w-40px">No</th>
+                                                        <th class="min-w-125px">RAM</th>
                                                         <th class="min-w-125px">Pelanggan</th>
                                                         <th class="min-w-125px">Timbang Bersih</th>
                                                         <th class="min-w-90px">File Pendukung</th>
@@ -186,9 +187,13 @@
                         <label for="tanggal" class="form-label">Tanggal</label>
                         <input type="text" class="form-control datepicker" name="tanggal" value="{{ date('Y-m-d') }}" id="tanggal" required>
                     </div>
-                    <div class="col-4 mb-2">
+                    <div class="col-sm-6 mb-2">
                         <label for="timbang_bersih" class="form-label">Timbang Bersih (Kg)</label>
                         <input type="text" class="form-control" name="timbang_bersih"  id="timbang_bersih" required>
+                    </div>
+                    <div class="col-sm-6 mb-2">
+                        <label for="timbang_bersih" class="form-label">Ram</label>
+                        <select class="form-select" name="ram_id" id="ram_id" required></select>
                     </div>
                     <div class="col-12 mb-2">
                         <label for="file" class="form-label">File</label>

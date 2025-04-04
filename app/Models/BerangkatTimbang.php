@@ -10,19 +10,24 @@ class BerangkatTimbang extends Model
     use HasFactory;
     protected $guarded = ["id"];
 
+    public function ram()
+    {
+        return $this->belongsTo(Ram::class);
+    }
+
     public function operator()
     {
         return $this->belongsTo(Operator::class);
     }
 
-    public function pabrik()
-    {
-        return $this->belongsTo(Pabrik::class);
-    }
+    // public function pabrik()
+    // {
+    //     return $this->belongsTo(Pabrik::class);
+    // }
 
     public function berangkatMobil()
     {
-        return $this->hasMany(BerangkatMobil::class);
+        return $this->belongsTo(BerangkatMobil::class);
     }
 
     public function berangkatPabrik()

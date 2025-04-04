@@ -24,4 +24,9 @@ class Supir extends Model
     {
         return $this->hasMany(BerangkatSupir::class);
     }
+
+    public function berangkatMobil()
+    {
+        return $this->hasMany(BerangkatMobil::class);
+    }
 }

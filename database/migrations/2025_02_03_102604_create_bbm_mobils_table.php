@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBerangkatMobilsTable extends Migration
+class CreateBbmMobilsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class CreateBerangkatMobilsTable extends Migration
      */
     public function up()
     {
-        Schema::create('berangkat_mobils', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('berangkat_timbang_id');
-            $table->foreign('berangkat_timbang_id')->references('id')->on('berangkat_timbangs')->cascadeOnDelete();
+        Schema::create('bbm_mobils', function (Blueprint $table) {
+            $table->integer('liter')->nullable();
+            $table->integer('harga_satuan')->default(0);
+            $table->integer('total')->default(0);
+            $table->date('tanggal');
             $table->foreignId('mobil_id');
             $table->foreign('mobil_id')->references('id')->on('mobils')->restrictOnDelete();
+            $table->foreignId('supir_id');
+            $table->foreign('supir_id')->references('id')->on('supirs')->restrictOnDelete();
             $table->foreignId('operator_id');
             $table->foreign('operator_id')->references('id')->on('operators')->restrictOnDelete();
-            $table->timestamps();
         });
     }
 
@@ -32,6 +34,6 @@ class CreateBerangkatMobilsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('berangkat_mobils');
+        Schema::dropIfExists('bbm_mobils');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTimbangTiketsTable extends Migration
+class CreatePerawatanMobilsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,15 @@ class CreateTimbangTiketsTable extends Migration
      */
     public function up()
     {
-        Schema::create('timbang_tikets', function (Blueprint $table) {
+        Schema::create('perawatan_mobils', function (Blueprint $table) {
             $table->id();
-            $table->string('file')->nullable();
-            $table->float('timbang_bersih')->default(0);
+            $table->string('item')->nullable();
+            $table->integer('biaya')->default(0);
             $table->date('tanggal');
-            $table->foreignId('ram_id');
-            $table->foreign('ram_id')->references('id')->on('rams')->restrictOnDelete();
-            $table->foreignId('pelanggan_id');
-            $table->foreign('pelanggan_id')->references('id')->on('pelanggans')->restrictOnDelete();
+            $table->foreignId('mobil_id');
+            $table->foreign('mobil_id')->references('id')->on('mobils')->restrictOnDelete();
             $table->foreignId('operator_id');
             $table->foreign('operator_id')->references('id')->on('operators')->restrictOnDelete();
-
             $table->timestamps();
         });
     }
@@ -36,6 +33,6 @@ class CreateTimbangTiketsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('timbang_tikets');
+        Schema::dropIfExists('perawatan_mobils');
     }
 }

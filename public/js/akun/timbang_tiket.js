@@ -8,8 +8,9 @@ $(document).ready(function() {
     var activeTab = 'masuk-tab';
 
     refreshData();
-    dataSumberBayar()
+    dataSumberBayar();
     dataPelanggan();
+    dataRam();
 
     $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
         activeTab = $('.nav-tabs .nav-link.active').attr('id');
@@ -60,6 +61,24 @@ $(document).ready(function() {
             });
             $('#pelanggan_id').trigger('change');
             $('#pelanggan_id').select2({
+                dropdownParent: $('#modal-form'),
+                templateResult: formatDataSelect2,
+            });    
+        });
+    }
+
+    function dataRam() {
+        var url = base_url + '/api/ram';
+        fetchData(url, function(response) {
+            $('#ram_id').empty();
+            $.each(response.data, function(key, value) {
+                $('#ram_id').append($('<option>', {
+                    value: value.id,
+                    text: value.nama,
+                }));
+            });
+            $('#ram_id').trigger('change');
+            $('#ram_id').select2({
                 dropdownParent: $('#modal-form'),
                 templateResult: formatDataSelect2,
             });    
@@ -138,6 +157,7 @@ $(document).ready(function() {
                                     value="${dt.id}">
                             </td>
                             <td>${no++}</td>
+                            <td>${dt.ram.nama}</td>
                             <td>
                                 <figure>
                                     <blockquote class="blockquote">
@@ -234,6 +254,7 @@ $(document).ready(function() {
         $('#tanggal').val(data.tanggal);
         $('#timbang_bersih').val(data.timbang_bersih);
         $('#pelanggan_id').val(data.pelanggan_id).trigger('change');
+        $('#ram_id').val(data.ram_id).trigger('change');
         showModal('modal-form');
     }
 
@@ -245,6 +266,7 @@ $(document).ready(function() {
 
             let data = {
                 pelanggan_id: $(this).data('pelanggan_id'),
+                ram_id: $(this).data('ram_id'),
                 timbang_tiket_id: $(this).val(),
                 pelanggan_user_name: $(this).data('pelanggan_user_name'),
                 timbang_bersih: $(this).data('timbang_bersih'),
@@ -355,6 +377,10 @@ $(document).ready(function() {
                 additionalData.push({
                     name: 'pelanggan_id[]',
                     value: pelanggan_id
+                });
+                additionalData.push({
+                    name: 'ram_id[]',
+                    value: ram_id
                 });
                 additionalData.push({
                     name: 'harga_satuan[]',

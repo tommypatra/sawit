@@ -2,84 +2,85 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Admin;
+use App\Models\Supir;
+use App\Models\Operator;
+use App\Models\Pelanggan;
 use App\Models\UserPabrik;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\UserPabrikRequest;
+use App\Http\Resources\UserPabrikResource;
 
 class UserPabrikController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $dataQuery = User::with(['pelanggan', 'operator', 'supir', 'admin', 'userPabrik'])->orderBy('name', 'ASC');
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $dataQuery->where('name', 'LIKE', '%' . $search . '%');
+        }
+
+        $limit = $request->filled('limit') ? $request->limit : 0;
+        if ($limit) {
+            $data = $dataQuery->paginate($limit);
+            $resourceCollection = $data->map(function ($item) {
+                return new UserPabrikResource($item);
+            });
+            $data->setCollection($resourceCollection);
+        } else {
+            $data = ['data' => UserPabrikResource::collection($dataQuery->get())];
+        }
+        return response()->json($data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(UserPabrikRequest $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $UserPabrik = UserPabrik::create($request->all());
+            DB::commit();
+            return response()->json(['message' => 'data baru berhasil dibuat', 'data' => $UserPabrik], 201);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'terjadi kesalahan saat membuat data baru: ' . $e->getMessage()], 500);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show($id)
     {
-        //
+        $dataQuery = UserPabrik::with(['pelanggan', 'operator', 'supir', 'admin'])->findOrFail($id);
+        return response()->json(['data' => new UserPabrikResource($dataQuery)], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\UserPabrik  $userPabrik
-     * @return \Illuminate\Http\Response
-     */
-    public function show(UserPabrik $userPabrik)
+    public function update(UserPabrikRequest $request, $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $UserPabrik = UserPabrik::findOrFail($id);
+            $UserPabrik->update($request->all());
+            DB::commit();
+            return response()->json(['message' => 'berhasil diperbarui', 'data' => $UserPabrik], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'terjadi kesalahan saat memperbarui: ' . $e->getMessage()], 500);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\UserPabrik  $userPabrik
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(UserPabrik $userPabrik)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\UserPabrik  $userPabrik
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, UserPabrik $userPabrik)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\UserPabrik  $userPabrik
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(UserPabrik $userPabrik)
-    {
-        //
+        try {
+            DB::beginTransaction();
+            $UserPabrik = UserPabrik::findOrFail($id);
+            $UserPabrik->delete();
+            DB::commit();
+            return response()->json(null, 204);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'terjadi kesalahan saat menghapus: ' . $e->getMessage()], 500);
+        }
     }
 }

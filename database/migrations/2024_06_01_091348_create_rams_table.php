@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGrupsTable extends Migration
+class CreateRamsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateGrupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('grups', function (Blueprint $table) {
+        Schema::create('rams', function (Blueprint $table) {
             $table->id();
             $table->string('nama')->unique();
-            // $table->smallInteger('type')->default(1);
+            $table->string('alamat');
+            $table->boolean('is_aktif')->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateGrupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grups');
+        Schema::dropIfExists('rams');
     }
 }

@@ -19,7 +19,7 @@
 @section('container')
 <div class="toolbar py-5 py-lg-15" id="kt_toolbar">
     <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
-        <h3 class="text-white fw-bolder fs-2qx me-5">Timbang Berangkat</h3>
+        <h3 class="text-white fw-bolder fs-2qx me-5">User</h3>
         <div class="d-flex align-items-center flex-wrap py-2">
             <div id="kt_header_search" class="d-flex align-items-center w-200px w-lg-250px my-2 me-4 me-lg-6" data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter" data-kt-search-layout="menu" data-kt-menu-trigger="auto" data-kt-menu-permanent="true" data-kt-menu-placement="bottom-end">
 
@@ -48,8 +48,8 @@
                         <div class="card card-xxl-stretch">
                             <div class="card-header">
                                 <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bolder text-dark">Tiket Timbang</span>
-                                    <span class="text-muted mt-1 fw-bold fs-7">mengelola data stok masuk dari tiket timbang</span>
+                                    <span class="card-label fw-bolder text-dark">Akun</span>
+                                    <span class="text-muted mt-1 fw-bold fs-7">mengelola akun aplikasi</span>
                                 </h3>
                                 <div class="card-toolbar">
                                     <button type="button" class="btn btn-icon btn-color-primary btn-active-light-primary tambah-baru"><i class="bi bi-plus-lg"></i></button>
@@ -91,24 +91,14 @@
                             </div>                            
                             <div class="card-body py-0 mb-3">
 
-                                <ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="berangkat-tab" data-value="berangkat" data-bs-toggle="tab" type="button" role="tab" >Berangkat Timbang</button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="pabrik-tab" data-value="pabrik" data-bs-toggle="tab" type="button" role="tab" >Timbang Pabrik</button>
-                                    </li>
-                                </ul>
-
                                 <div class="table-responsive">
                                     <table class="table align-middle table-row-bordered table-row-dashed gy-5" id="kt_table_widget_1">
                                         <thead>
                                             <tr class="text-start text-gray-400 fw-boldest fs-7 text-uppercase">
                                                 <th class="min-w-40px">No</th>
-                                                <th class="min-w-125px">Nomor Nota/ Pabrik / Alamat / HP</th>
-                                                <th class="min-w-90px">RAM/ Timbang Bersih/ Kotor (Kg)/ Pegawai</th>
-                                                <th class="min-w-100px">Mobil/ Supir</th>
-                                                <th class="min-w-90px">Operator / Waktu</th>
+                                                <th class="min-w-125px">Nama</th>
+                                                <th class="min-w-90px">Email</th>
+                                                <th class="min-w-100px">Akses Akun</th>
                                                 <th class="min-w-20px"></th>
                                             </tr>
                                         </thead>
@@ -143,70 +133,38 @@
 
 
 <div class="modal fade" id="modal-form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form id="form-modal" >
                 <input type="hidden" name="id" id="id" >
 
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Timbang Berangkat</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Akun</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body row">
-                    <div class="col-sm-8 mb-2">
-                        <label for="pabrik_id" class="form-label">Pabrik</label>
-                        <select class="form-select" name="pabrik_id" id="pabrik_id" required></select>
+                    <div class="col-sm-6 mb-2">
+                        <label for="name" class="form-label">Nama</label>
+                        <input type="text" class="form-control" name="name" id="name" required>
                     </div>
-                    <div class="col-sm-4 mb-2">
-                        <label for="tanggal" class="form-label">Tanggal</label>
-                        <input type="text" class="form-control datepicker" name="tanggal" value="{{ date('Y-m-d') }}" id="tanggal" required>
-                    </div>
-
-                    <h4>Mobil dan Sopir</h4>
-                    <div class="col-sm-5 mb-2">
-                        <select class="form-select" name="mobil_id" id="mobil_id" required></select>
-                    </div>
-                    <div class="col-sm-7 mb-2">
-                        <select class="form-select" name="supir_id" id="supir_id" required></select>
-                    </div>
-                    {{-- <div class="col-sm-2 mb-2">
-                        <button type="button" class="btn btn-icon btn-color-primary btn-active-light-primary" id="tambah_mobil" ><i class="bi bi-plus-lg"></i></button>
-                    </div> --}}
-
-                    <h5 class="mt-2">Muatan</h5>
-                    <div class="col-sm-4 mb-2">
-                        <label for="ram_id" class="form-label">RAM</label>
-                        <select class="form-select" name="ram_id" id="ram_id" ></select>
-                    </div>
-                    <div class="col-sm-3 mb-2">
-                        <label for="timbang_bersih" class="form-label">Bersih (Kg)</label>
-                        <input type="number" class="form-control" name="timbang_bersih"  id="timbang_bersih" >
-                    </div>
-                    <div class="col-sm-3 mb-2">
-                        <label for="timbang_kotor" class="form-label">Kotor (Kg)</label>
-                        <input type="number" class="form-control" name="timbang_kotor"  id="timbang_kotor" >
-                    </div>
-                    <div class="col-sm-2 mb-2">
-                        <button type="button" class="btn btn-icon btn-color-primary btn-active-light-primary mt-8" id="tambah_muatan" ><i class="bi bi-plus-lg"></i></button>
+                    <div class="col-sm-6 mb-2">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" required>
                     </div>
 
-                    <div class="table-responsive">
-                        <h4>Rincian Muatan</h4>
-                        <table class="table align-middle table-row-bordered" id="tabel_muatan">
-                            <thead>
-                                <tr>
-                                    <th class="min-w-30px">No</th>
-                                    <th class="min-w-10px">RAM</th>
-                                    <th class="min-w-70px">Bersih (Kg)</th>
-                                    <th class="min-w-70px">Kotor (Kg)</th>
-                                    <th class="min-w-30px"></th>
-                                </tr>
-                            </thead>
-                            <tbody class='body_muatan1'>
-                            </tbody>
-                        </table>
+                    <div class="col-sm-12 mb-2">
+                        <label for="alamat" class="form-label">Alamat</label>
+                        <textarea rows="3" class="form-control" name="alamat" id="alamat" required></textarea>
                     </div>
-                    
+                    <div class="col-sm-6 mb-2">
+                        <label for="hp" class="form-label">No. Handphone</label>
+                        <input type="text" class="form-control" name="hp" id="hp" required>
+                    </div>
+
+                    <div class="col-sm-6 mb-2">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" >
+                    </div>
                 </div>
 
                 <div class="modal-footer">
@@ -218,84 +176,21 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal-timbang-pabrik" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="modal-akses" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form id="form-timbang-pabrik" >
-                <input type="hidden" name="berangkat_pabrik_id" id="berangkat_pabrik_id" >
-                <input type="hidden" name="berangkat_mobil_id" id="berangkat_mobil_id" >
-                <input type="hidden" name="ram_berat_kotor_awal" id="ram_berat_kotor_awal" >
+            <form id="form-akses" >
+                <input type="hidden" name="user_id" id="user_id" >
+
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Timbangan Pabrik</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Akses</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h4>Timbang</h4>
-                    <div class="row">
-                        <div class="col-sm-4 mb-2">
-                            <label for="tanggal" class="form-label">Tanggal</label>
-                            <input type="text" class="form-control datepicker" name="tanggal_timbang" value="{{ date('Y-m-d') }}" id="tanggal_timbang" required>
-                        </div>
-                        <div class="col-sm-4 mb-2">
-                            <label for="pabrik_timbang_kotor" class="form-label">Berat Kotor</label>
-                            <input type="number" class="form-control" name="pabrik_timbang_kotor"  id="pabrik_timbang_kotor" required oninput="hitungTp()">
-                        </div>
-                        <div class="col-sm-4 mb-2">
-                            <label for="pabrik_timbang_bersih" class="form-label">Berat Bersih</label>
-                            <input type="number" class="form-control" name="pabrik_timbang_bersih"  id="pabrik_timbang_bersih" required>
-                        </div>
+                <div class="modal-body row">
+                    <div class="col-sm-12 mb-2" id="daftar-akses">
                     </div>
-                    <h4>Biaya/ Sewa</h4>
-                    <div class="row">
-                        <div class="col-sm-4 mb-2">
-                            <label for="biaya_loading" class="form-label">Biaya Loading (Rp)</label>
-                            <input type="number" class="form-control" name="biaya_loading"  id="biaya_loading" oninput="hitungHarga()" required >
-                        </div>
-
-                        <div class="col-sm-4 mb-2">
-                            <label for="biaya_bongkar" class="form-label">Biaya Bongkar (Rp)</label>
-                            <input type="number" class="form-control" name="biaya_bongkar"  id="biaya_bongkar" oninput="hitungHarga()" required >
-                        </div>
-                        <div class="col-sm-4 mb-2">
-                            <label for="sewa_mobil" class="form-label">Sewa Mobil (Rp)</label>
-                            <input type="number" class="form-control" name="sewa_mobil"  id="sewa_mobil" oninput="hitungHarga()" required >
-                        </div>
-
-                        <div class="col-sm-2 mb-2">
-                            <label for="tp" class="form-label">TP Sawit</label>
-                            <input type="text" class="form-control buram" name="tp"  id="tp" required oninput="hitungSetelahTimbangPabrik()" readonly>
-                            <div id="nilai_tp"></div>
-                        </div>
-                        <div class="col-sm-5 mb-2">
-                            <label for="harga_sawit" class="form-label">Jumlah (Rp)</label>
-                            <input type="text" class="form-control buram" name="harga_sawit"  id="harga_sawit" readonly required >
-                        </div>
-
-                        <div class="col-sm-5 mb-2">
-                            <label for="bersih" class="form-label">Bersih (Rp)</label>
-                            <input type="number" class="form-control buram" name="bersih"  id="bersih" readonly required >
-                        </div>
-                    </div>
-
-                    <div class="table-responsive">
-                        <h4>Rincian Muatan</h4>
-                        <table class="table align-middle table-row-bordered" id="tabel_muatan2">
-                            <thead>
-                                <tr>
-                                    <th class="min-w-30px">No</th>
-                                    <th class="min-w-10px">RAM</th>
-                                    <th class="min-w-70px">Ram Kotor (Kg)</th>
-                                    <th class="min-w-70px">Persen</th>
-                                    <th class="min-w-70px">Berat Pabrik</th>
-                                    <th class="min-w-70px">Harga</th>
-                                </tr>
-                            </thead>
-                            <tbody class='body_muatan2'>
-                            </tbody>
-                        </table>
-                    </div>
-
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -304,7 +199,6 @@
         </div>
     </div>
 </div>
-
 
 @endsection
 
@@ -326,5 +220,5 @@
     var operator_id=1;    
     var vLimit=25;
 </script>
-<script src="{{ url('js/akun/timbang_berangkat.js') }}"></script>
+<script src="{{ url('js/akun/akun.js') }}"></script>
 @endsection

@@ -3,11 +3,15 @@
 use App\Models\SumberBayar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RamController;
+use App\Http\Controllers\AkunController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GrupController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\SupirController;
 use App\Http\Controllers\PabrikController;
 use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\UserPabrikController;
 use App\Http\Controllers\SumberBayarController;
 use App\Http\Controllers\TimbangBeliController;
 use App\Http\Controllers\TimbangNotaController;
@@ -34,7 +38,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('token-cek/{grup_id}', [AuthController::class, 'tokenGrupCek']);
 
+    Route::resource('grup', GrupController::class);
     Route::resource('pelanggan', PelangganController::class);
+    Route::resource('ram', RamController::class);
     Route::resource('pabrik', PabrikController::class);
     Route::resource('supir', SupirController::class);
     Route::resource('mobil', MobilController::class);
@@ -48,6 +54,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('mobil-berangkat', BerangkatMobilController::class);
     Route::resource('pabrik-berangkat', BerangkatPabrikController::class);
 
-    // Route::delete('hapus-supir-berangkat/{id}', [BerangkatTimbangController::class, 'hapusSupirBerangkat']);
+    Route::resource('user', AkunController::class);
+    Route::get('daftar-akses/{id}', [AkunController::class, 'daftarAkses']);
+    Route::get('hapus-akses-user', [AkunController::class, 'hapusAksesUser']);
+    Route::post('simpan-akses-user', [AkunController::class, 'simpanAksesUser']);
+
+    Route::post('update-timbang-pabrik', [BerangkatPabrikController::class, 'updateTimbangPabrik']);
+    Route::delete('timbang-pabrik-mobil/{id}', [BerangkatPabrikController::class, 'hapusTimbangPabrikMobil']);
+    Route::delete('timbang-muatan/{id}', [BerangkatTimbangController::class, 'hapusTimbangMuatan']);
     // Route::delete('hapus-mobil-berangkat/{id}', [BerangkatTimbangController::class, 'hapusMobilBerangkat']);
 });

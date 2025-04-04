@@ -14,6 +14,12 @@ class BerangkatPabrik extends Model
     {
         return $this->belongsTo(BerangkatTimbang::class);
     }
+
+    public function berangkatMobil()
+    {
+        return $this->belongsTo(BerangkatMobil::class);
+    }
+
     public function operator()
     {
         return $this->belongsTo(Operator::class);

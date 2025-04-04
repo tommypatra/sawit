@@ -13,6 +13,7 @@ class TimbangTiketController extends Controller
     public function index(Request $request)
     {
         $dataQuery = TimbangTiket::with([
+            'ram',
             'operator.user',
             'pelanggan.user',
         ])

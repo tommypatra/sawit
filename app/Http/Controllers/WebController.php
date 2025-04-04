@@ -29,4 +29,13 @@ class WebController extends Controller
     {
         return view('akun/timbang_berangkat');
     }
+
+    public function akun()
+    {
+        return view('akun/akun');
+    }
+    public function ram()
+    {
+        return view('akun/ram');
+    }
 }

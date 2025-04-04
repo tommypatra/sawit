@@ -15,8 +15,8 @@ class CreateUserPabriksTable extends Migration
     {
         Schema::create('user_pabriks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pabrik_id');
-            $table->foreign('pabrik_id')->references('id')->on('pabriks')->restrictOnDelete();
+            // $table->foreignId('pabrik_id');
+            // $table->foreign('pabrik_id')->references('id')->on('pabriks')->restrictOnDelete();
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users')->restrictOnDelete();
             $table->foreignId('grup_id');

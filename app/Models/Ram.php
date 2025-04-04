@@ -5,23 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pabrik extends Model
+class Ram extends Model
 {
     use HasFactory;
     protected $guarded = ["id"];
-
-    public function userPabrik()
-    {
-        return $this->hasMany(UserPabrik::class);
-    }
 
     public function berangkatTimbang()
     {
         return $this->hasMany(BerangkatTimbang::class);
     }
 
-    public function berangkatMobil()
+    public function timbangTiket()
     {
-        return $this->hasMany(BerangkatMobil::class);
+        return $this->hasMany(TimbangTiket::class);
     }
 }

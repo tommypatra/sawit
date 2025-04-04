@@ -12,7 +12,7 @@ class BerangkatMobil extends Model
 
     public function berangkatTimbang()
     {
-        return $this->belongsTo(BerangkatTimbang::class);
+        return $this->hasMany(BerangkatTimbang::class);
     }
 
     public function operator()
@@ -23,6 +23,21 @@ class BerangkatMobil extends Model
     public function mobil()
     {
         return $this->belongsTo(Mobil::class);
+    }
+
+    public function pabrik()
+    {
+        return $this->belongsTo(Pabrik::class);
+    }
+
+    public function berangkatPabrik()
+    {
+        return $this->hasOne(BerangkatPabrik::class);
+    }
+
+    public function supir()
+    {
+        return $this->belongsTo(Supir::class);
     }
 
     public function berangkatSupir()

@@ -18,8 +18,8 @@ class BerangkatTimbangRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        $mobil = json_decode($this->input('mobil'), true);
-        $this->merge(['mobil' => $mobil]);
+        $muatan = json_decode($this->input('muatan'), true);
+        $this->merge(['muatan' => $muatan]);
     }
 
     public function rules()
@@ -27,14 +27,14 @@ class BerangkatTimbangRequest extends FormRequest
         $rules = [
             'id' => 'nullable',
             'tanggal' => 'required|date_format:Y-m-d',
-            'timbang_bersih' => 'required|numeric',
-            'timbang_kotor' => 'required|numeric',
             'pabrik_id' => 'required|numeric',
             'operator_id' => 'required|numeric',
-            'mobil' => 'required|array',
-            'mobil.*.mobil_id' => 'required|numeric',
-            'mobil.*.supir_list' => 'required|array',
-            'mobil.*.supir_list.*.supir_id' => 'required|numeric',
+            'mobil_id' => 'required|numeric',
+            'supir_id' => 'required|numeric',
+            'muatan' => 'required|array',
+            'muatan.*.ram_id' => 'required|numeric',
+            'muatan.*.ram_timbang_kotor' => 'required|numeric',
+            'muatan.*.ram_timbang_bersih' => 'required|numeric',
         ];
         return $rules;
     }
@@ -42,16 +42,16 @@ class BerangkatTimbangRequest extends FormRequest
     public function attributes()
     {
         return [
-            'id' => 'id berangkat timbang',
-            'tanggal' => 'tanggal berangkat timbang',
-            'timbang_bersih' => 'timbang bersih (kg)',
-            'timbang_kotor' => 'timbang kotor (kg)',
-            'pabrik_id' => 'pabrik',
+            'id' => 'id berangkat',
+            'tanggal' => 'tanggal berngkat',
+            'pabrik_id' => 'pabrik tujuan',
             'operator_id' => 'operator',
-            'mobil' => 'mobil',
-            'mobil.*.mobil_id' => 'mobil id',
-            'mobil.*.supir_list' => 'daftar supir',
-            'mobil.*.supir_list.*.supir_id' => 'supir id',
+            'mobil_id' => 'mobil yang digunakan',
+            'supir_id' => 'supir mobil',
+            'muatan' => 'muatan',
+            'muatan.*.ram_id' => 'ram',
+            'muatan.*.ram_timbang_kotor' => 'timbang kotor',
+            'muatan.*.ram_timbang_bersih' => 'timbang bersih',
         ];
     }
 }

@@ -21,6 +21,7 @@ class TimbangTiketResource extends JsonResource
             'file' => $this->file,
             'file_jenis' => jenisFile($this->file),
             'timbang_bersih' => $this->timbang_bersih,
+            'ram' => $this->ram,
             'tanggal' => $this->tanggal,
             'timbang_beli_total_bayar' => $total_bayar,
             'timbang_beli' => ($total_bayar > 0) ? true : false,

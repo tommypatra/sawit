@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WebController;
+use App\Http\Controllers\CetakController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +21,13 @@ Route::get('/login', [WebController::class, 'auth']);
 //untuk akun
 Route::get('/dashboard', [WebController::class, 'dashboard'])->name('dashboard');
 
+Route::get('/akun', [WebController::class, 'akun'])->name('akun');
+Route::get('/ram', [WebController::class, 'ram'])->name('ram');
+
 //untuk operator
 Route::get('/operator/timbang-tiket', [WebController::class, 'timbangTiket'])->name('timbang-tiket');
 Route::get('/operator/timbang-berangkat', [WebController::class, 'timbangBerangkat'])->name('timbang-berangkat');
+
+
+//untuk akun
+Route::get('/cetak-timbang-pabrik', [CetakController::class, 'cetakTimbangPabrik'])->name('cetak-timbang-pabrik');

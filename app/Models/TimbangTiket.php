@@ -10,6 +10,12 @@ class TimbangTiket extends Model
     use HasFactory;
     protected $guarded = ["id"];
 
+    public function ram()
+    {
+        return $this->belongsTo(Ram::class);
+    }
+
+
     public function operator()
     {
         return $this->belongsTo(Operator::class);

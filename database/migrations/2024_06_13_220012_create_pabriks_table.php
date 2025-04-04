@@ -18,6 +18,9 @@ class CreatePabriksTable extends Migration
             $table->string('nama')->unique();
             $table->string('alamat');
             $table->string('hp');
+            $table->integer('biaya_bongkar')->default(0);
+            $table->integer('biaya_supir')->default(0);
+            $table->integer('biaya_mobil')->default(0);
             $table->boolean('is_aktif')->default(0);
             $table->timestamps();
         });
